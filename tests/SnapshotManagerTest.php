@@ -103,7 +103,7 @@ class SnapshotManagerTest extends AbstractTestCase
 
         $this->snapshotManager->snapshot();
 
-        $authors = $book->getAuthors()->getIterator();
+        $book->getAuthors()->getIterator();
         $this->checkUnitOfWork(4, [$book, $book->getCategory()]);
 
         $this->snapshotManager->clear();

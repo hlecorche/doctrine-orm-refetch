@@ -69,7 +69,7 @@ class RefetchManagerTest extends AbstractTestCase
         self::assertNotNull($book);
         $this->assertEquals(2, $this->countObjectsInUnitOfWork()); // Book + category (lazy association)
 
-        $categoryName = $book->getCategory()?->getName();
+        $book->getCategory()?->getName();
         $this->assertEquals(2, $this->countObjectsInUnitOfWork()); // Nothing new
 
         $authors = $book->getAuthors();
@@ -77,7 +77,7 @@ class RefetchManagerTest extends AbstractTestCase
 
         $first = $authors->first();
         self::assertNotFalse($first);
-        $firstLastName = $first->getFirstName();
+        $first->getFirstName();
         $this->assertEquals(5, $this->countObjectsInUnitOfWork()); // + 3 authors (lazy association collection - collection is populated the first time its accessed)
 
         $this->em->clear();
@@ -93,10 +93,10 @@ class RefetchManagerTest extends AbstractTestCase
 
         $first = $books->first();
         self::assertNotFalse($first);
-        $firstTitle = $first->getTitle();
+        $first->getTitle();
         $this->assertEquals(7, $this->countObjectsInUnitOfWork()); // + 4 books (lazy association collection) + 2 categories
 
-        $firstCategoryName = $book->getCategory()?->getName();
+        $book->getCategory()?->getName();
         $this->assertEquals(7, $this->countObjectsInUnitOfWork()); // Nothing new
 
         $this->em->clear();
@@ -110,7 +110,7 @@ class RefetchManagerTest extends AbstractTestCase
         self::assertNotNull($book);
         $this->assertEquals(3, $this->countObjectsInUnitOfWork()); // Nothing new
 
-        $category = $book->getCategory();
+        $book->getCategory();
         $this->assertEquals(4, $this->countObjectsInUnitOfWork()); // + category
     }
 
@@ -204,7 +204,7 @@ class RefetchManagerTest extends AbstractTestCase
             $book = $this->refetchManager->getObject($book);
         }
 
-        $authors = $book->getAuthors()->getIterator();
+        $book->getAuthors()->getIterator();
         $this->checkUnitOfWork(4, [$book, $book->getCategory()]);
     }
 
@@ -441,7 +441,7 @@ class RefetchManagerTest extends AbstractTestCase
         $this->assertCount(5, $books);
         $first = $books->first();
         self::assertNotFalse($first);
-        $firstTitle = $first->getTitle();
+        $first->getTitle();
         $this->assertEquals(6, $this->countObjectsInUnitOfWork());
     }
 
@@ -463,7 +463,7 @@ class RefetchManagerTest extends AbstractTestCase
         $this->assertCount(5, $books);
         $first = $books->first();
         self::assertNotFalse($first);
-        $firstTitle = $first->getTitle();
+        $first->getTitle();
         $this->assertEquals(6, $this->countObjectsInUnitOfWork());
     }
 
